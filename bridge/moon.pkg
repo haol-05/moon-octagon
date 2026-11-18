@@ -1,0 +1,9 @@
+import {
+  "niuniu513-ask/moon-octagon" @oct,
+}
+
+pkgtype(kind: "executable")
+
+options(
+  link: { "js": { "exports": [ "analyze", "batch" ], "format": "esm" } },
+)

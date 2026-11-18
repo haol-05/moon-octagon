@@ -1,0 +1,29 @@
+name: verify
+on:
+  push:
+  pull_request:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - run: moon version --all
+      - run: moon fmt --check
+      - run: moon check --target all --deny-warn -j 1
+      - run: moon info
+      - run: git diff --exit-code -- '*.mbti'
+      - run: node scripts/verify.mjs
+      - run: moon build --target native -j 1
+      - run: moon test --target native --deny-warn -j 1
+      - run: moon run examples/relations --target native -j 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: independent-oracle
+          path: _build/reports/independent-oracle.json

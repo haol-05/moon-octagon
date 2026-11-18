@@ -1,0 +1,203 @@
+{
+  "date": "2026-11-18",
+  "private_files_excluded": [
+    "申报书.md"
+  ],
+  "files": [
+    {
+      "file": ".gitignore",
+      "bytes": 57,
+      "sha256": "742ebbd5b29e98e16259b30e155f8c26f8180a0a9ad8eb38fa79f73970394bc9"
+    },
+    {
+      "file": "closure.mbt",
+      "bytes": 4797,
+      "sha256": "20901d09b35c5a8151a4c2798df9ed0421bf60dd83c4f374e877ad1e3cb2ad31"
+    },
+    {
+      "file": "evidence.mbt",
+      "bytes": 4403,
+      "sha256": "0140cb4172c8266c2a29363d1d3a06add8d4a52763597ab922a4b98061bea1b9"
+    },
+    {
+      "file": "flow.mbt",
+      "bytes": 2907,
+      "sha256": "f1a2e6d17cd8178be3e4f71e5ee957786d2f9798cda20c9cb469e2bf96460f1c"
+    },
+    {
+      "file": "LICENSE",
+      "bytes": 1082,
+      "sha256": "0d6cdb0177166d3846f6ea319353efac21425546b791b4b279d2260cd6f71c82"
+    },
+    {
+      "file": "model.mbt",
+      "bytes": 4391,
+      "sha256": "a166789aed6fcd41161bd2a98ca7c5a2fba894c1d5af224025ef0f7eec6f7a5d"
+    },
+    {
+      "file": "moon.mod",
+      "bytes": 330,
+      "sha256": "e42db4b5609610ecf9bbe150499a7a0d124c9ddf17e656153fddc843e8498a39"
+    },
+    {
+      "file": "moon.pkg",
+      "bytes": 126,
+      "sha256": "159ba3f9361a9f165c46ffa82f7f59f414be1dd3c6e099b76601029d291b1ecd"
+    },
+    {
+      "file": "operations.mbt",
+      "bytes": 5015,
+      "sha256": "de7f927884b821a6d99e7c56a5db38a3121e33d041f428c4f5b3ae33788e14d7"
+    },
+    {
+      "file": "oracle_wbtest.mbt",
+      "bytes": 4582,
+      "sha256": "4abf8de29f88332dcaf3065d77be90f4d1eaa365aecf6dc37181268bbc92fa2d"
+    },
+    {
+      "file": "package.json",
+      "bytes": 246,
+      "sha256": "f0e78c3b70a6e2246d0c2bdc9bbc9eab0cdc8282f8bcfe1bf666241a039e81ea"
+    },
+    {
+      "file": "pkg.generated.mbti",
+      "bytes": 3815,
+      "sha256": "08647a3f502c81abde57b1623cc1b87f1c6955d51a29e02c09da68e21d14c279"
+    },
+    {
+      "file": "protocol.mbt",
+      "bytes": 9650,
+      "sha256": "5b7cd6d005db7f5286716874c5e7dc2bbd2026a66aefee7ba4ab02c00f94a39b"
+    },
+    {
+      "file": "public_test.mbt",
+      "bytes": 655,
+      "sha256": "978da4b902d5b81b2c981cda3e054df7e7d9fd2126391e25d9a276a0861a1f50"
+    },
+    {
+      "file": "README.md",
+      "bytes": 6639,
+      "sha256": "77475282fcbf150e28f683a368e824b73f1b74b174b0c13b310d12d11ec6fa86"
+    },
+    {
+      "file": "SOURCES.md",
+      "bytes": 8055,
+      "sha256": "7d0742b677c147f2c6d0b5ceb117eca4e84bd62b9f13c636f2d19bad52d9985a"
+    },
+    {
+      "file": "tests_wbtest.mbt",
+      "bytes": 7642,
+      "sha256": "7a18b8ee07837ec8760c86365491ec090e6f998f20360691aadf11aa2933d44d"
+    },
+    {
+      "file": "toolchain.json",
+      "bytes": 213,
+      "sha256": "801d71f243255401cfd1c3a8fab825edf84fce4f729723ae5e4518bd472d143e"
+    },
+    {
+      "file": "scripts/cli.mjs",
+      "bytes": 1475,
+      "sha256": "d73a9d4b0670a5bf3349242c5f6aab952f5a030d2b5133eaaf4141fac1171254"
+    },
+    {
+      "file": "scripts/moon.ps1",
+      "bytes": 1084,
+      "sha256": "dc05197d1df77bbd11f261756d1613d8bd4f1201ce91a6480c36222b29336f99"
+    },
+    {
+      "file": "scripts/verify.mjs",
+      "bytes": 10177,
+      "sha256": "a1b1036b597af512a5943607aa04ba32a8ed4999b85fcf0998e6007202cf0c5a"
+    },
+    {
+      "file": "examples/configuration.json",
+      "bytes": 458,
+      "sha256": "1cedbb0c6075a00632a1b3107f391e16857440419b24172eda70eb048a79ba4b"
+    },
+    {
+      "file": "examples/loop.json",
+      "bytes": 562,
+      "sha256": "11dd034d443ae19e77e859c9a2bda59ab341aeb4ce1a174fdef035b00507bd50"
+    },
+    {
+      "file": "examples/parity-conflict.json",
+      "bytes": 458,
+      "sha256": "fb5b7f7fff091d0a94e8b3305773af9307e0a69e7ee9ad858ddcee008d91ebbb"
+    },
+    {
+      "file": "examples/sensors.json",
+      "bytes": 450,
+      "sha256": "29d7b272848599a1d61096a6579dc8b0704eda2247cbec61eb15b11dc10d2efb"
+    },
+    {
+      "file": "examples/relations/main.mbt",
+      "bytes": 1093,
+      "sha256": "83b5787ec61f9a7facd9334ba8c4b3a57f592c5cf8d554cb869078daeb4b8e50"
+    },
+    {
+      "file": "examples/relations/moon.pkg",
+      "bytes": 77,
+      "sha256": "9a5241d999c1138126ca6107f37e3e435cdebac80a67524df1c848765d4ada02"
+    },
+    {
+      "file": "examples/relations/pkg.generated.mbti",
+      "bytes": 174,
+      "sha256": "4b2472df53add794b8e84697d5159698d58c2cd9237b8866465a117795523db7"
+    },
+    {
+      "file": "docs/CONTEST.md",
+      "bytes": 3414,
+      "sha256": "524fbfd6db0b3888b4c1ff4ea9c4ba6a1435c856bce3cd86e71db7a75968525d"
+    },
+    {
+      "file": "docs/research-evidence.json",
+      "bytes": 3377,
+      "sha256": "dca7b119496938d22194f1e89780b930cb2155fd4c6ee6ee2b2431671ad713ec"
+    },
+    {
+      "file": "docs/SEMANTICS.md",
+      "bytes": 4637,
+      "sha256": "b40c076a1810b314c72daa712ed860d67ba2925eef3534cc89cdeb4e23723abc"
+    },
+    {
+      "file": "docs/VALIDATION.md",
+      "bytes": 4752,
+      "sha256": "c9dea9146439f0669713bcead34d47da02ed580b2723acb74cd9a9b2ae308b35"
+    },
+    {
+      "file": "cmd/main/main.mbt",
+      "bytes": 559,
+      "sha256": "f70895dd18e08ca1400cdd2b82843fed396a0963ef9ec2c1871eb4dec521b930"
+    },
+    {
+      "file": "cmd/main/moon.pkg",
+      "bytes": 103,
+      "sha256": "4d3523d642762d53b6e627f1fea7705ccdd89fe72825379739d9010bc49d444f"
+    },
+    {
+      "file": "cmd/main/pkg.generated.mbti",
+      "bytes": 164,
+      "sha256": "cadc05fcdf504742e76406f8cc376a20bc4d093320ab5b11a92dea65ccd2f42c"
+    },
+    {
+      "file": "bridge/main.mbt",
+      "bytes": 182,
+      "sha256": "912ae2667d972b23812161f99e9841b94786f88323448eeb0901638e070bb2e3"
+    },
+    {
+      "file": "bridge/moon.pkg",
+      "bytes": 163,
+      "sha256": "ff50707966a2a0d4a7eb4ddf10c07d56b2d0b80ab7a44150c83ba1785baf2391"
+    },
+    {
+      "file": "bridge/pkg.generated.mbti",
+      "bytes": 227,
+      "sha256": "292a1d59fd704ad66f1ddd772fecfc3caf6ab45b997503aa757dea0afe67a563"
+    },
+    {
+      "file": ".github/workflows/ci.yml",
+      "bytes": 906,
+      "sha256": "1612f1a41224b3c376898b7e8642ab413d9031190e3974e742d1f21c8034135e"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "date": "2026-11-18",
+  "timezone": "Asia/Shanghai",
+  "raw_evidence_directory": "D:/moonbit/contest-submission/research-faulttree-20261118",
+  "files": [
+    {
+      "file": "adjacent-audit.json",
+      "bytes": 7563,
+      "sha256": "6ee23940a66d42a73b6b639c34d6a2934085c4c211356f13ea3b97f29bc32dd3"
+    },
+    {
+      "file": "code-0.json",
+      "bytes": 22054,
+      "sha256": "dffa0979bbcfb4ee762d27475a09faa1bd6c226589e2db81bcf8ecc5ea67710e"
+    },
+    {
+      "file": "code-1.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "file": "code-2.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "file": "code-3.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "file": "code-4.json",
+      "bytes": 22054,
+      "sha256": "dffa0979bbcfb4ee762d27475a09faa1bd6c226589e2db81bcf8ecc5ea67710e"
+    },
+    {
+      "file": "extra-code-0.json",
+      "bytes": 2777,
+      "sha256": "4ebee412db5c383a2c392c06363387964e0fe8e3c80b92cac59bfeaa732c0c31"
+    },
+    {
+      "file": "extra-code-1.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "file": "extra-code-2.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "file": "extra-code-3.json",
+      "bytes": 35570,
+      "sha256": "f6f3a1ae4982f027f028c8306b9aff5dec44a9c945d923aa235180c9f59c1d3b"
+    },
+    {
+      "file": "extra-code-inspection.json",
+      "bytes": 5568,
+      "sha256": "a0c718bdeec43574061ac415b20e7ab0776d9a9a23b34ea3cd3fa46412f64ef8"
+    },
+    {
+      "file": "github-deep-summary.json",
+      "bytes": 1613,
+      "sha256": "f2640c0b4be87b8731156a646f44e367d26a3c93611d32aa7d4f954d27222b5a"
+    },
+    {
+      "file": "octagon-code-inspection.json",
+      "bytes": 30783,
+      "sha256": "7da0e6fefe1f83ef04ae184e97f96d6f6e0359f088774dca5e95f2501f64b9ad"
+    },
+    {
+      "file": "registry-retry.txt",
+      "bytes": 1410945,
+      "sha256": "dd03ad48c4321c51ea325b6d1768290225effef916155e13c54e59d892c5ac2e"
+    },
+    {
+      "file": "second-summary.json",
+      "bytes": 4241,
+      "sha256": "7ea85143ceec8c211455d6a477ae464a9fadbf633d4c291029f330267acd292f"
+    },
+    {
+      "file": "static-analysis-interval-inspection.json",
+      "bytes": 7188,
+      "sha256": "3fb2d039091ed270fb8061d1b8d4936f446a6bfe6fa3520fbfd79bf8303c8ac9"
+    },
+    {
+      "file": "targeted-code-0.json",
+      "bytes": 355,
+      "sha256": "8bd69098063fb042bc0c7a1f4e9c70d30c409db33cc76492d75610033a197b2b"
+    },
+    {
+      "file": "targeted-code-1.json",
+      "bytes": 720,
+      "sha256": "4fbf06287af1936523769f90fd2b6143ad3da71bd8faf537ef48be46c6914baf"
+    },
+    {
+      "file": "targeted-code-2.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "file": "targeted-code-3.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    {
+      "file": "targeted-code-4.json",
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    }
+  ]
+}

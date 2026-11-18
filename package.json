@@ -1,0 +1,12 @@
+{
+  "name": "moon-octagon-local-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "node scripts/verify.mjs",
+    "example": "node scripts/cli.mjs examples/configuration.json"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

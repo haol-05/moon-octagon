@@ -1,0 +1,5 @@
+import {
+  "niuniu513-ask/moon-octagon" @oct,
+}
+
+pkgtype(kind: "executable")

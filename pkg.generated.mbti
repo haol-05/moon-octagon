@@ -1,0 +1,134 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "niuniu513-ask/moon-octagon"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitlang/core/json",
+}
+
+// Values
+pub fn analyze_loop(Octagon, Array[Constraint], Array[Transfer], max_iterations? : Int32, widen_after? : Int32, narrowing_steps? : Int32) -> LoopResult raise OctagonError
+
+pub fn bottom(Int32) -> Octagon raise OctagonError
+
+pub fn explain_conflict(Int32, Array[Constraint], max_checks? : Int32) -> Conflict? raise OctagonError
+
+pub fn from_constraints(Int32, Array[Constraint]) -> Octagon raise OctagonError
+
+pub fn lower(Int32, Int64) -> Constraint
+
+pub fn negative(Int32) -> Term
+
+pub fn positive(Int32) -> Term
+
+pub fn process_batch_json(String) -> String
+
+pub fn process_json(String) -> String
+
+pub fn relation(Term, Term, Int64) -> Constraint
+
+pub fn satisfies(Array[Int64], Constraint) -> Bool raise OctagonError
+
+pub fn top(Int32) -> Octagon raise OctagonError
+
+pub fn upper(Int32, Int64) -> Constraint
+
+pub fn verify_conflict(Int32, Array[Constraint], Conflict) -> Bool raise OctagonError
+
+pub fn verify_invariant(Octagon, Octagon, Array[Constraint], Array[Transfer]) -> Bool raise OctagonError
+
+// Errors
+#derive(@debug.Debug)
+pub suberror OctagonError {
+  Invalid(String)
+  Limit(String)
+  Arithmetic(String)
+}
+
+// Types and methods
+#derive(Eq, @debug.Debug, @json.ToJson)
+pub(all) struct Conflict {
+  indices : Array[Int32]
+  checks : Int32
+}
+
+#derive(Eq, @debug.Debug, @json.ToJson)
+pub(all) struct Constraint {
+  left : Term
+  right : Term?
+  bound : Int64
+}
+
+#derive(Eq, @debug.Debug, @json.ToJson)
+pub(all) struct Interval {
+  lower : Int64?
+  upper : Int64?
+}
+
+pub struct LoopResult {
+  head : Octagon
+  status : LoopStatus
+  iterations : Int32
+}
+pub fn LoopResult::invariant(Self) -> Octagon
+pub fn LoopResult::iterations(Self) -> Int32
+pub fn LoopResult::status(Self) -> LoopStatus
+
+#derive(@debug.Debug, @json.ToJson)
+pub enum LoopStatus {
+  Inductive
+  BudgetExhausted
+}
+
+pub struct Octagon {
+  dimensions : Int32
+  matrix : Array[Array[Int64]]
+  empty : Bool
+}
+pub fn Octagon::assign(Self, Int32, Term, Int64) -> Self raise OctagonError
+pub fn Octagon::bound(Self, Term, Term?) -> Int64? raise OctagonError
+pub fn Octagon::canonical(Self) -> Self raise OctagonError
+pub fn Octagon::check(Self, Constraint) -> Verdict raise OctagonError
+pub fn Octagon::constraints(Self) -> Array[Constraint] raise OctagonError
+pub fn Octagon::contains(Self, Array[Int64]) -> Bool raise OctagonError
+pub fn Octagon::entails(Self, Constraint) -> Bool raise OctagonError
+pub fn Octagon::equivalent(Self, Self) -> Bool raise OctagonError
+pub fn Octagon::execute(Self, Array[Transfer]) -> Self raise OctagonError
+pub fn Octagon::forget(Self, Int32) -> Self raise OctagonError
+pub fn Octagon::interval(Self, Int32) -> Interval? raise OctagonError
+pub fn Octagon::is_bottom(Self) -> Bool
+pub fn Octagon::is_top(Self) -> Bool
+pub fn Octagon::join(Self, Self) -> Self raise OctagonError
+pub fn Octagon::meet(Self, Self) -> Self raise OctagonError
+pub fn Octagon::refine(Self, Array[Constraint]) -> Self raise OctagonError
+pub fn Octagon::report(Self) -> @json.Json raise OctagonError
+pub fn Octagon::set_constant(Self, Int32, Int64) -> Self raise OctagonError
+pub fn Octagon::size(Self) -> Int32
+pub fn Octagon::subset_of(Self, Self) -> Bool raise OctagonError
+pub fn Octagon::widen(Self, Self) -> Self raise OctagonError
+pub fn Octagon::witness(Self) -> Array[Int64]? raise OctagonError
+
+#derive(Eq, @debug.Debug, @json.ToJson)
+pub(all) struct Term {
+  variable : Int32
+  sign : Int32
+}
+
+#derive(@debug.Debug)
+pub(all) enum Transfer {
+  Guard(Array[Constraint])
+  Assign(Int32, Term, Int64)
+  Set(Int32, Int64)
+  Forget(Int32)
+}
+
+#derive(@debug.Debug, @json.ToJson)
+pub enum Verdict {
+  Vacuous
+  Proven
+  Refuted(Array[Int64])
+}
+
+// Type aliases
+
+// Traits

@@ -1,0 +1,15 @@
+{
+  "op": "loop",
+  "dimensions": 2,
+  "constraints": [
+    { "left": { "variable": 0, "sign": 1 }, "bound": 0 },
+    { "left": { "variable": 0, "sign": -1 }, "bound": 0 },
+    { "left": { "variable": 1, "sign": 1 }, "bound": 10 },
+    { "left": { "variable": 1, "sign": -1 }, "bound": -10 }
+  ],
+  "guard": [{ "left": { "variable": 0, "sign": 1 }, "bound": 9 }],
+  "body": [
+    { "op": "assign", "target": 0, "source": { "variable": 0, "sign": 1 }, "offset": 1 },
+    { "op": "assign", "target": 1, "source": { "variable": 1, "sign": 1 }, "offset": -1 }
+  ]
+}

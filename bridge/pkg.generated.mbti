@@ -1,0 +1,15 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "niuniu513-ask/moon-octagon/bridge"
+
+// Values
+pub fn analyze(String) -> String
+
+pub fn batch(String) -> String
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

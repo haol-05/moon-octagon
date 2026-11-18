@@ -1,0 +1,10 @@
+{
+  "op": "conflict",
+  "dimensions": 2,
+  "constraints": [
+    { "left": { "variable": 0, "sign": 1 }, "right": { "variable": 1, "sign": 1 }, "bound": 1 },
+    { "left": { "variable": 0, "sign": -1 }, "right": { "variable": 1, "sign": -1 }, "bound": -1 },
+    { "left": { "variable": 0, "sign": 1 }, "right": { "variable": 1, "sign": -1 }, "bound": 0 },
+    { "left": { "variable": 0, "sign": -1 }, "right": { "variable": 1, "sign": 1 }, "bound": 0 }
+  ]
+}

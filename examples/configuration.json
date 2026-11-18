@@ -1,0 +1,13 @@
+{
+  "op": "analyze",
+  "dimensions": 2,
+  "constraints": [
+    { "left": { "variable": 0, "sign": -1 }, "bound": 0 },
+    { "left": { "variable": 1, "sign": -1 }, "bound": 0 },
+    { "left": { "variable": 0, "sign": 1 }, "right": { "variable": 1, "sign": 1 }, "bound": 100 }
+  ],
+  "queries": [
+    { "left": { "variable": 0, "sign": 1 }, "right": { "variable": 1, "sign": 1 }, "bound": 100 },
+    { "left": { "variable": 0, "sign": 1 }, "bound": 50 }
+  ]
+}
