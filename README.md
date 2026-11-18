@@ -1,5 +1,7 @@
 # moon-octagon
 
+[![ci](https://github.com/haol-05/moon-octagon/actions/workflows/ci.yml/badge.svg)](https://github.com/haol-05/moon-octagon/actions/workflows/ci.yml)
+
 **纯 MoonBit 整数关系约束与不变量分析库。** 保留 `x+y≤c`、`x−y≤c`、`x≤c` 等关系，提供整数紧闭包、不可变抽象状态、赋值与投影、分支合并、循环不变量及可检查的反例。不是一个只有命令行的演示：核心公开 API 可被其他 MoonBit 项目直接调用。
 
 ## 为什么需要它
@@ -76,15 +78,21 @@ let after_copy = s.assign(1, @oct.negative(0), 100L)
 
 ```powershell
 moon fmt --check
-moon check --target all --deny-warn -j 1
-moon info
+moon check --target js --deny-warn -j 1
+moon check --target wasm --deny-warn -j 1
+moon check --target wasm-gc --deny-warn -j 1
+moon build --target js -j 1
+moon test --target js --deny-warn -j 1
+node --test scripts/cli.test.mjs
 node scripts/verify.mjs
 ```
 
-本地已验证 JS / Wasm / WasmGC 每目标 21 项测试，额外独立枚举 **1,046 个系统、21,216 次查询、320 次赋值、320 次 join/meet、64 组冲突证据**；其中穷举了 28 条二元有符号规则的所有 406 种无序二规则组合。测试目标是有限模型中的语义，不把有限测试当成形式化证明。详见 [docs/VALIDATION.md](docs/VALIDATION.md)，可复跑收据写在 `_build/reports/independent-oracle.json`。
+本地已验证 JS / Wasm / WasmGC 每目标 26 项测试，额外独立枚举 **1,046 个系统、21,216 次查询、320 次赋值、320 次 join/meet、64 组冲突证据**；其中穷举了 28 条二元有符号规则的所有 406 种无序二规则组合。测试目标是有限模型中的语义，不把有限测试当成形式化证明。详见 [docs/VALIDATION.md](docs/VALIDATION.md)，可复跑收据写在 `_build/reports/independent-oracle.json`。
 
-本机 Native 受当前 Windows runtime 仅支持 MSVC 的限制，使用已有 GCC 时编译官方 runtime 失败；**不报告 Native 测试通过**。未来 CI 在 Linux 上包含 Native 检查，但当前只提供配置、尚未在线执行。
+GitHub Actions（[ci.yml](.github/workflows/ci.yml)）在 Linux 上分四个作业运行格式检查、三个目标的 check/build/test、Native 构建测试、示例和独立 oracle；作业结果以 Actions 页面为准。
+
+本机 Windows Native 受当前 runtime 仅支持 MSVC 的限制，使用已有 GCC 时编译官方 runtime 失败，因此**不报告本机 Native 通过**；CI 的 Linux native 作业单独运行并在 Actions 记录。
 
 本项目与已有区间分析、SMT/符号执行、Cassowary、STN 存在数学和用途相邻关系。**GitHub 仓库/README/代码与 Mooncakes 都已检索，有限范围未发现相同整数八边形域核心；不能保证全网零重叠或官方过审。** 具体查询与源码证据见 [SOURCES.md](SOURCES.md)。
 
-MIT 许可证。算法来自公开文献的独立实现，不是新数学算法，也不是 APRON 完整移植。仅本地交付，没有初始化 Git、创建提交、上传 GitHub、发布 Mooncakes 或提交报名。
+MIT 许可证。算法来自公开文献的独立实现，不是新数学算法，也不是 APRON 完整移植。源码仓库已公开在 <https://github.com/haol-05/moon-octagon>；**尚未发布 Mooncakes**，也没有提交报名或进入官方初审。

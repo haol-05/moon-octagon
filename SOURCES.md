@@ -56,6 +56,6 @@
 
 ## 证据位置
 
-本机原始响应/源码快照：`D:\moonbit\contest-submission\research-faulttree-20261118`（最初从故障树候选开始，因此保留原目录名）。项目内 [docs/research-evidence.json](docs/research-evidence.json) 记录原始文件大小与 SHA-256；目录中有 GitHub 代码返回、逐文件命中行、全部模块元数据和相邻源码快照。该绝对路径只描述本地研究资料，不是用户需要安装的依赖。
+研究用原始响应/源码快照保存在本项目工作区之外（最初从故障树候选开始，目录名沿用，不随仓库或发布包分发）。项目内 [docs/research-evidence.json](docs/research-evidence.json) 记录原始文件大小与 SHA-256；快照包含 GitHub 代码返回、逐文件命中行、全部模块元数据和相邻源码快照。这些只是检索记录，不是用户需要安装的依赖。
 
 没有覆盖的范围：所有未公开源码、全部仓库分支/维护计划、所有可能同义词和全部 3844 模块源码。后续生态变化与官方审查均可改变当前选题结论。
