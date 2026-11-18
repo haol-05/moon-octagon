@@ -9,10 +9,13 @@ else {
     if ($command) { $tool = $command.Source }
     else {
         $workspaceRoot = Split-Path -Parent $projectRoot
-        $localTool = Join-Path $workspaceRoot '_tools\moon-audit-20261118\bin\moon.exe'
-        if (Test-Path -LiteralPath $localTool) {
-            $tool = $localTool
-            $env:MOON_HOME = Split-Path -Parent (Split-Path -Parent $tool)
+        $toolsRoot = Join-Path $workspaceRoot '_tools'
+        if (Test-Path -LiteralPath $toolsRoot) {
+            $localTool = Get-ChildItem -Path $toolsRoot -Filter 'moon.exe' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($localTool) {
+                $tool = $localTool.FullName
+                $env:MOON_HOME = Split-Path -Parent (Split-Path -Parent $tool)
+            }
         }
     }
 }
