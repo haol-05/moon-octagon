@@ -96,6 +96,7 @@ pub fn Octagon::equivalent(Self, Self) -> Bool raise OctagonError
 pub fn Octagon::execute(Self, Array[Transfer]) -> Self raise OctagonError
 pub fn Octagon::forget(Self, Int32) -> Self raise OctagonError
 pub fn Octagon::interval(Self, Int32) -> Interval? raise OctagonError
+pub fn Octagon::intervals(Self) -> Array[Interval?] raise OctagonError
 pub fn Octagon::is_bottom(Self) -> Bool
 pub fn Octagon::is_top(Self) -> Bool
 pub fn Octagon::join(Self, Self) -> Self raise OctagonError

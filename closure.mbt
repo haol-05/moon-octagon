@@ -120,6 +120,41 @@ pub fn Octagon::interval(
 }
 
 ///|
+/// All variable intervals from a single canonicalisation.
+/// Entries are `None` only when the domain is empty.
+pub fn Octagon::intervals(
+  self : Octagon,
+) -> Array[Interval?] raise OctagonError {
+  let result : Array[Interval?] = []
+  if self.empty {
+    for _ in 0..<self.dimensions {
+      result.push(None)
+    }
+    return result
+  }
+  let s = self.canonical()
+  for i in 0..<self.dimensions {
+    let hi = s.matrix[i * 2][i * 2 + 1]
+    let lo = s.matrix[i * 2 + 1][i * 2]
+    result.push(
+      Some({
+        lower: if lo == INF {
+          None
+        } else {
+          Some(-half_floor(lo))
+        },
+        upper: if hi == INF {
+          None
+        } else {
+          Some(half_floor(hi))
+        },
+      }),
+    )
+  }
+  result
+}
+
+///|
 /// Tight upper bound for a signed unary or binary expression. Empty => error.
 /// None => expression is unbounded above.
 pub fn Octagon::bound(

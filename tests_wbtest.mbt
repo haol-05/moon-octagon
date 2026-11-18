@@ -252,3 +252,23 @@ test "strict JSON success conflict errors and budgets" {
     assert_true(process_json(input).contains("\"ok\":false"))
   }
 }
+
+///|
+test "batch intervals agree with per-variable queries" {
+  let s = from_constraints(3, [
+    lower(0, 0L),
+    upper(1, 10L),
+    relation(positive(0), negative(1), 2L),
+    relation(positive(2), negative(2), 7L),
+  ])
+  let all = s.intervals()
+  assert_eq(all.length(), 3)
+  for i in 0..<3 {
+    assert_eq(all[i], s.interval(i))
+  }
+  assert_eq(bottom(2).intervals(), [None, None])
+  assert_eq(top(2).intervals(), [
+    Some({ lower: None, upper: None, }),
+    Some({ lower: None, upper: None, }),
+  ])
+}
