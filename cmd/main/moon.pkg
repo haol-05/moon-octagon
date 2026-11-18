@@ -1,5 +1,5 @@
 import {
-  "niuniu513-ask/moon-octagon" @oct,
+  "haol-05/moon-octagon" @oct,
   "moonbitlang/core/env",
 }
 

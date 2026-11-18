@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "niuniu513-ask/moon-octagon/bridge"
+package "haol-05/moon-octagon/bridge"
 
 // Values
 pub fn analyze(String) -> String

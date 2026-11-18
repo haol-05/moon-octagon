@@ -1,8 +1,10 @@
-name = "niuniu513-ask/moon-octagon"
+name = "haol-05/moon-octagon"
 
 version = "0.1.0"
 
 readme = "README.md"
+
+repository = "https://github.com/haol-05/moon-octagon"
 
 license = "MIT"
 
