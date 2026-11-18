@@ -24,11 +24,14 @@ $env:MOON_HOME = 'C:\path\to\moon'
 $env:Path = "$env:MOON_HOME\bin;$env:Path"
 
 moon run examples/relations --target js -j 1
+moon run examples/interval-gap --target js -j 1
 node scripts/cli.mjs examples/configuration.json
 node scripts/cli.mjs examples/sensors.json
 node scripts/cli.mjs examples/loop.json
 node scripts/cli.mjs examples/parity-conflict.json
 ```
+
+`examples/interval-gap` 对同一份 `x0+x1<=100` 预算同时给出独立区间结论（和上界 200）与关系域结论（上界 100），并打印 `render` 的规范形式。
 
 `scripts/cli.mjs` 负责输入读取、调用构建产物及进程退出码；所有模型校验与分析都在 MoonBit 中执行。它直接导入 MoonBit 导出的 JS 函数，不把大文件塞进进程参数。输入可来自文件或 stdin（`-`），`--out FILE` 把结果写到文件，`--batch` 对每项保留独立 `ok` 状态。退出码：成功 0，请求错误 2，用法错误 64，构建/内部失败 1；`node --test scripts/cli.test.mjs` 覆盖 stdin、批处理和错误码。
 
