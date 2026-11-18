@@ -1,9 +1,16 @@
-name: verify
+name: ci
+
 on:
   push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
-  verify:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,15 +21,83 @@ jobs:
         run: |
           curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
           echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
-      - run: moon version --all
-      - run: moon fmt --check
-      - run: moon check --target all --deny-warn -j 1
-      - run: moon info
-      - run: git diff --exit-code -- '*.mbti'
-      - run: node scripts/verify.mjs
-      - run: moon build --target native -j 1
-      - run: moon test --target native --deny-warn -j 1
-      - run: moon run examples/relations --target native -j 1
+      - name: Show toolchain
+        run: moon version --all
+      - name: Check formatting
+        run: moon fmt --check
+      - name: Type-check js
+        run: moon check --target js --deny-warn -j 1
+      - name: Type-check wasm
+        run: moon check --target wasm --deny-warn -j 1
+      - name: Type-check wasm-gc
+        run: moon check --target wasm-gc --deny-warn -j 1
+      - name: Regenerate public interfaces
+        run: moon info
+      - name: Interfaces are committed
+        run: git diff --exit-code -- '*.mbti'
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [js, wasm, wasm-gc]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: Show toolchain
+        run: moon version --all
+      - name: Build ${{ matrix.target }}
+        run: moon build --target ${{ matrix.target }} -j 1
+      - name: Test ${{ matrix.target }}
+        run: moon test --target ${{ matrix.target }} --deny-warn -j 1
+      - name: Relation example
+        run: moon run examples/relations --target ${{ matrix.target }} -j 1
+      - name: Interval-gap example
+        run: moon run examples/interval-gap --target ${{ matrix.target }} -j 1
+      - name: CLI contract
+        if: matrix.target == 'js'
+        run: node --test scripts/cli.test.mjs
+
+  native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: Show toolchain
+        run: moon version --all
+      - name: Build native
+        run: moon build --target native -j 1
+      - name: Test native
+        run: moon test --target native --deny-warn -j 1
+      - name: Relation example
+        run: moon run examples/relations --target native -j 1
+      - name: Interval-gap example
+        run: moon run examples/interval-gap --target native -j 1
+
+  oracle:
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: Independent finite-state oracle
+        run: node scripts/verify.mjs
       - uses: actions/upload-artifact@v4
         with:
           name: independent-oracle
