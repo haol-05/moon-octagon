@@ -44,7 +44,7 @@ Transfer 使用 `op=guard` + constraints，`op=assign` + target/source/offset，
 
 所有外层结果明确包含 `ok`。数值结果中的 Int64 **输出十进制字符串**，如 `"100"`；无界为 `null`，不是 0。非空 domain 输出 intervals 和 witness；空域只有 `state=empty`。单请求文本 ≤200000 UTF-16 单位，批请求 ≤1000000，深度 ≤32，批次 ≤64 项；单请求 constraints/queries ≤512。
 
-`process_json` 与直接 CLI 使用结构化错误信封；直接 `moon run cmd/main` 总是打印一条结果，由调用者检查 ok。文件包装器 `scripts/cli.mjs` 则把单请求错误转为退出码 2；批处理仍退出 0，调用者逐项读取 ok。文件读取和输出失败抛出/退出失败，不把部分输出当成功。
+`process_json` 与直接 CLI 使用结构化错误信封；直接 `moon run cmd/main` 总是打印一条结果，由调用者检查 ok。包装器 `scripts/cli.mjs` 支持文件或 stdin（`-`）输入、`--out` 输出文件，并把单请求错误转为退出码 2；用法错误为 64，构建或内部失败为 1，批处理仍退出 0、调用者逐项读取 ok。文件读取和输出失败直接退出，不把部分输出当成功。
 
 ## 证据含义
 

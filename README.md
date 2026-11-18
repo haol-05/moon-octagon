@@ -19,10 +19,10 @@
 需要 MoonBit **moonc 0.10.21**（本地实测 `v0.10.21+06da1ed44`，moon `0.1.20261117`）和 Node.js ≥22；无第三方包依赖，仅官方 core。当前工具链的 `#derive`、JSON 自由函数等接口不承诺兼容旧编译器。
 
 ```powershell
-cd D:\moonbit\moon-octagon
-# 当前工作区已经安装的工具链；其他机器改用自己的安装路径。
-$env:MOON_HOME = 'D:\moonbit\_tools\moon-audit-20261118'
+# 安装方式见 https://www.moonbitlang.com/download ；也可以指向已有工具链：
+$env:MOON_HOME = 'C:\path\to\moon'
 $env:Path = "$env:MOON_HOME\bin;$env:Path"
+
 moon run examples/relations --target js -j 1
 node scripts/cli.mjs examples/configuration.json
 node scripts/cli.mjs examples/sensors.json
@@ -30,7 +30,7 @@ node scripts/cli.mjs examples/loop.json
 node scripts/cli.mjs examples/parity-conflict.json
 ```
 
-`scripts/cli.mjs` 负责文件读取、调用构建产物及进程退出码；所有模型校验与分析都在 MoonBit 中执行。它直接导入 MoonBit 导出的 JS 函数，不把大文件塞进进程参数。单请求错误退出 2，成功退出 0；`--batch file.json` 对每项保留独立 `ok` 状态。
+`scripts/cli.mjs` 负责输入读取、调用构建产物及进程退出码；所有模型校验与分析都在 MoonBit 中执行。它直接导入 MoonBit 导出的 JS 函数，不把大文件塞进进程参数。输入可来自文件或 stdin（`-`），`--out FILE` 把结果写到文件，`--batch` 对每项保留独立 `ok` 状态。退出码：成功 0，请求错误 2，用法错误 64，构建/内部失败 1；`node --test scripts/cli.test.mjs` 覆盖 stdin、批处理和错误码。
 
 ## 调用库
 

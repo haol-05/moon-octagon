@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "verify": "node scripts/verify.mjs",
+    "test": "node --test scripts/cli.test.mjs",
     "example": "node scripts/cli.mjs examples/configuration.json"
   },
   "engines": {
