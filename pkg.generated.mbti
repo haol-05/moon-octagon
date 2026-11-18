@@ -27,6 +27,8 @@ pub fn process_json(String) -> String
 
 pub fn relation(Term, Term, Int64) -> Constraint
 
+pub fn render_constraint(Constraint) -> String
+
 pub fn satisfies(Array[Int64], Constraint) -> Bool raise OctagonError
 
 pub fn top(Int32) -> Octagon raise OctagonError
@@ -95,6 +97,7 @@ pub fn Octagon::entails(Self, Constraint) -> Bool raise OctagonError
 pub fn Octagon::equivalent(Self, Self) -> Bool raise OctagonError
 pub fn Octagon::execute(Self, Array[Transfer]) -> Self raise OctagonError
 pub fn Octagon::forget(Self, Int32) -> Self raise OctagonError
+pub fn Octagon::forget_many(Self, Array[Int32]) -> Self raise OctagonError
 pub fn Octagon::interval(Self, Int32) -> Interval? raise OctagonError
 pub fn Octagon::intervals(Self) -> Array[Interval?] raise OctagonError
 pub fn Octagon::is_bottom(Self) -> Bool

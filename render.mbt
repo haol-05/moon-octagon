@@ -9,6 +9,35 @@ fn interval_text(r : Interval) -> String {
 }
 
 ///|
+fn term_text(t : Term, first : Bool) -> String {
+  if first {
+    if t.sign == 1 {
+      "x\{t.variable}"
+    } else {
+      "-x\{t.variable}"
+    }
+  } else if t.sign == 1 {
+    " + x\{t.variable}"
+  } else {
+    " - x\{t.variable}"
+  }
+}
+
+///|
+/// Human-readable form of one constraint, using the same signed-sum syntax as
+/// `Octagon::render`. Bounds are printed exactly as stored.
+pub fn render_constraint(c : Constraint) -> String {
+  let sb = StringBuilder()
+  sb.write(term_text(c.left, true))
+  match c.right {
+    Some(t) => sb.write(term_text(t, false))
+    None => ()
+  }
+  sb.write(" <= \{c.bound}")
+  sb.to_string()
+}
+
+///|
 /// Stable single-line rendering for logs and examples: per-variable intervals
 /// followed by every non-redundant binary bound of the canonical conjunction.
 /// Only the four signed sums are printed because the flipped entries are their

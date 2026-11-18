@@ -37,7 +37,7 @@ Term 为 `{"variable":0,"sign":1}`。Constraint 为 `{"left":Term,"right":Term�
 | analyze | 可选 queries，≤512 条候选约束 | domain、每项 proven/refuted/vacuous、最紧上界、反例 |
 | transfer | transfers | 最终 domain |
 | join / meet | other，另一组同维约束 | 合并/交集 domain |
-| conflict | 可选 max_checks | 极小冲突索引及 verified；可满足时 conflict=null |
+| conflict | 可选 max_checks | 极小冲突索引、所选约束的文本、verified；可满足时 conflict=null 且 constraints 为空数组 |
 | loop | guard、body；可选 max_iterations / widen_after / narrowing_steps | inductive / budget_exhausted、head、iterations、verified |
 
 Transfer 使用 `op=guard` + constraints，`op=assign` + target/source/offset，`op=set` + target/value，`op=forget` + target。

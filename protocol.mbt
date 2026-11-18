@@ -227,11 +227,16 @@ fn dispatch(value : Json) -> Json raise OctagonError {
         cs,
         max_checks=optional_integer(m, "max_checks", 1024),
       )
+      let texts : Array[String] = match c {
+        None => []
+        Some(e) => e.indices.map(k => render_constraint(cs[k]))
+      }
       {
         "conflict": match c {
           None => @json.null
           Some(e) => @json.to_json(e)
         },
+        "constraints": @json.to_json(texts),
         "verified": @json.to_json(
           match c {
             None => false
