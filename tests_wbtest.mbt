@@ -294,3 +294,32 @@ test "stable rendering of top bottom and bounded invariants" {
   )
   assert_true(shared.render() == shared.canonical().render())
 }
+
+///|
+test "multi-variable projection matches repeated forget and is order independent" {
+  let s = from_constraints(3, [
+    lower(0, 0L),
+    upper(0, 10L),
+    lower(1, 0L),
+    upper(1, 10L),
+    lower(2, 0L),
+    upper(2, 10L),
+    relation(positive(0), positive(1), 8L),
+    relation(positive(1), negative(2), 3L),
+  ])
+  let both = s.forget_many([0, 2])
+  assert_true(both.equivalent(s.forget(0).forget(2)))
+  assert_true(both.equivalent(s.forget_many([2, 0])))
+  assert_true(s.forget_many([]).equivalent(s))
+  assert_eq(both.interval(0), Some({ lower: None, upper: None, }))
+  assert_eq(both.interval(1), s.interval(1))
+  assert_eq(both.interval(2), Some({ lower: None, upper: None, }))
+  let invalid = try {
+    ignore(s.forget_many([0, 3]))
+    false
+  } catch {
+    Invalid(_) => true
+    _ => false
+  }
+  assert_true(invalid)
+}

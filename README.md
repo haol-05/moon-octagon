@@ -54,8 +54,8 @@ let after_copy = s.assign(1, @oct.negative(0), 100L)
 | 接口组 | 已实现行为 |
 | --- | --- |
 | 构造与查询 | `top`、`bottom`、`from_constraints`、`refine`、`interval`、`intervals`、`bound`、`entails`、`contains`、`constraints`、`render` |
-| 集合与状态变换 | `meet`、`join`、`subset_of`、`equivalent`、`forget`、`assign`、`set_constant`、`widen`、`execute` |
-| 证据 | `witness`、`check`、`satisfies`、`explain_conflict`、`verify_conflict` |
+| 集合与状态变换 | `meet`、`join`、`subset_of`、`equivalent`、`forget`、`forget_many`、`assign`、`set_constant`、`widen`、`execute` |
+| 证据 | `witness`、`check`、`satisfies`、`explain_conflict`、`verify_conflict`、`render_constraint` |
 | 循环与集成 | `analyze_loop`、`verify_invariant`、`process_json`、`process_batch_json`、`report` |
 
 ## 数学语义与边界

@@ -112,12 +112,16 @@ pub fn Octagon::widen(
 }
 
 ///|
-/// Existential projection. Consequences among retained variables survive.
-pub fn Octagon::forget(
+/// Existential projection of several variables in one closure.
+/// The result does not depend on the order of `targets`; an empty list
+/// returns a canonical copy of the domain.
+pub fn Octagon::forget_many(
   self : Octagon,
-  target : Int32,
+  targets : Array[Int32],
 ) -> Octagon raise OctagonError {
-  variable(self.dimensions, target)
+  for target in targets {
+    variable(self.dimensions, target)
+  }
   if self.empty {
     return self
   }
@@ -125,12 +129,21 @@ pub fn Octagon::forget(
   let m = clone_matrix(s.matrix)
   for i in 0..<m.length() {
     for j in 0..<m.length() {
-      if i / 2 == target || j / 2 == target {
+      if targets.any(t => i / 2 == t || j / 2 == t) {
         m[i][j] = if i == j { 0L } else { INF }
       }
     }
   }
   close(self.dimensions, m)
+}
+
+///|
+/// Existential projection. Consequences among retained variables survive.
+pub fn Octagon::forget(
+  self : Octagon,
+  target : Int32,
+) -> Octagon raise OctagonError {
+  self.forget_many([target])
 }
 
 ///|

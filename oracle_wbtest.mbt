@@ -83,6 +83,52 @@ test "independent exhaustive membership signed assignment projection and export"
 }
 
 ///|
+test "multi-variable projection agrees with concrete projection" {
+  let cs = [
+    lower(0, -3L),
+    upper(0, 3L),
+    lower(1, -3L),
+    upper(1, 3L),
+    lower(2, -3L),
+    upper(2, 3L),
+    relation(positive(0), positive(1), 2L),
+    relation(negative(1), positive(2), 1L),
+  ]
+  let points : Array[Array[Int64]] = []
+  for x in -3..<4 {
+    for y in -3..<4 {
+      for z in -3..<4 {
+        let p = [x.to_int64(), y.to_int64(), z.to_int64()]
+        if concrete_holds(p, cs) {
+          points.push(p)
+        }
+      }
+    }
+  }
+  assert_true(points.length() > 0)
+  let s = from_constraints(3, cs)
+  let t = s.forget_many([0, 2])
+  assert_eq(t.interval(0), Some({ lower: None, upper: None, }))
+  assert_eq(t.interval(2), Some({ lower: None, upper: None, }))
+  let mut lo = 100L
+  let mut hi = -100L
+  for p in points {
+    if p[1] < lo {
+      lo = p[1]
+    }
+    if p[1] > hi {
+      hi = p[1]
+    }
+  }
+  assert_eq(t.interval(1), Some({ lower: Some(lo), upper: Some(hi), }))
+  for y in -3..<4 {
+    let expected = points.any(p => p[1] == y.to_int64())
+    assert_eq(t.contains([99L, y.to_int64(), 99L]), expected)
+    assert_eq(t.contains([-99L, y.to_int64(), -99L]), expected)
+  }
+}
+
+///|
 test "tight closure canonical structural invariants" {
   let cs = [
     lower(0, -2L),
