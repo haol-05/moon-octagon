@@ -22,7 +22,7 @@
 | 可运行与测试 | 3 目标各 26 项测试、CLI 合同测试 4 项 + 1046 个有限系统的独立枚举对照 |
 | 来源与许可证 | MIT、公开数学参考、无第三方复制代码；官方 core 为编译依赖 |
 | README、示例、CI | 本地配齐；GitHub Actions run 44320812207 的 check/test/native/oracle 六个作业全部通过 |
-| GitHub | 公开仓库 https://github.com/haol-05/moon-octagon，main 分支含 11 个内容提交 |
+| GitHub | 公开仓库 https://github.com/haol-05/moon-octagon，main 分支保留连续、可追溯的开发提交 |
 | Mooncakes、报名 | 均未执行；发布与问卷提交仍需参赛者明确授权并完成 |
 | Native | 本机 Windows runtime 要求 MSVC，GCC 构建失败，不报告本机通过；CI 的 Linux native 作业成功 |
 
