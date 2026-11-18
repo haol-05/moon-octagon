@@ -272,3 +272,25 @@ test "batch intervals agree with per-variable queries" {
     Some({ lower: None, upper: None, }),
   ])
 }
+
+///|
+test "stable rendering of top bottom and bounded invariants" {
+  assert_eq(top(2).render(), "top(2)")
+  assert_eq(bottom(3).render(), "bottom(3)")
+  let box = from_constraints(1, [lower(0, 2L), upper(0, 5L)])
+  assert_eq(box.render(), "x0 in [2, 5]")
+  assert_eq(
+    top(2).set_constant(0, 5L).render(),
+    "x0 in [5, 5]; x1 in (-inf, inf)",
+  )
+  let shared = from_constraints(2, [
+    lower(0, 0L),
+    lower(1, 0L),
+    relation(positive(0), positive(1), 100L),
+  ])
+  assert_eq(
+    shared.render(),
+    "x0 in [0, 100]; x1 in [0, 100]; x0+x1<=100; x0-x1<=100; -x0+x1<=100; -x0-x1<=0",
+  )
+  assert_true(shared.render() == shared.canonical().render())
+}

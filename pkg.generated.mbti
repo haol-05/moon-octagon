@@ -102,6 +102,7 @@ pub fn Octagon::is_top(Self) -> Bool
 pub fn Octagon::join(Self, Self) -> Self raise OctagonError
 pub fn Octagon::meet(Self, Self) -> Self raise OctagonError
 pub fn Octagon::refine(Self, Array[Constraint]) -> Self raise OctagonError
+pub fn Octagon::render(Self) -> String raise OctagonError
 pub fn Octagon::report(Self) -> @json.Json raise OctagonError
 pub fn Octagon::set_constant(Self, Int32, Int64) -> Self raise OctagonError
 pub fn Octagon::size(Self) -> Int32
