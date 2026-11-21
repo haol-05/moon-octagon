@@ -39,7 +39,7 @@ node scripts/cli.mjs examples/parity-conflict.json
 
 ## 调用库
 
-Mooncakes 包：[haol-05/moon-octagon 0.1.1](https://mooncakes.io/docs/haol-05/moon-octagon)（服务端 `build_status=success`）。用 `moon add haol-05/moon-octagon` 安装，或在 `moon.pkg` 中导入 `"haol-05/moon-octagon" @oct`：
+Mooncakes 包：[haol-05/moon-octagon 0.1.2](https://mooncakes.io/docs/haol-05/moon-octagon)（服务端 `build_status=success`）。用 `moon add haol-05/moon-octagon` 安装，或在 `moon.pkg` 中导入 `"haol-05/moon-octagon" @oct`：
 
 ```moonbit
 let s = @oct.from_constraints(2, [
@@ -95,4 +95,4 @@ GitHub Actions（[ci.yml](.github/workflows/ci.yml)）在 Linux 上分四个作�
 
 本项目与已有区间分析、SMT/符号执行、Cassowary、STN 存在数学和用途相邻关系。**GitHub 仓库/README/代码与 Mooncakes 都已检索，有限范围未发现相同整数八边形域核心；不能保证全网零重叠或官方过审。** 具体查询与源码证据见 [SOURCES.md](SOURCES.md)。
 
-MIT 许可证。算法来自公开文献的独立实现，不是新数学算法，也不是 APRON 完整移植。源码仓库已公开在 <https://github.com/haol-05/moon-octagon>，Mooncakes 0.1.1 已发布并通过服务端构建；没有提交报名或进入官方初审。
+MIT 许可证。算法来自公开文献的独立实现，不是新数学算法，也不是 APRON 完整移植。源码仓库已公开在 <https://github.com/haol-05/moon-octagon>，Mooncakes 0.1.2 已发布并通过服务端构建；没有提交报名或进入官方初审。

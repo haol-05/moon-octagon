@@ -1,6 +1,6 @@
 # 本地验证记录
 
-日期：2026-11-21，Asia/Shanghai。状态：核心实现、公开仓库与 Mooncakes 0.1.1 交付完成；报名、初审与最终验收未提交。
+日期：2026-11-21，Asia/Shanghai。状态：核心实现、公开仓库与 Mooncakes 0.1.2 交付完成；报名、初审与最终验收未提交。
 
 ## 工具链
 
@@ -22,8 +22,8 @@
 | `moon coverage analyze` | 未覆盖行由 101 降至 33；核心库仅余防御性/不可达分支，示例与 CLI 进程入口不计入单元覆盖 |
 | 干净副本复现 | 源码复制到仓库外目录、排除 `_build`/`.git`，重跑 verify.mjs 退出 0，三个目标仍为 37/37 |
 | GitHub Actions | run [44320812207](https://github.com/haol-05/moon-octagon/actions/runs/44320812207)：check、test(js)、test(wasm)、test(wasm-gc)、native、oracle 六个作业全部 success；后续提交运行同样通过 |
-| Mooncakes | `moon publish` 发布 `haol-05/moon-octagon@0.1.1`；[manifest API](https://mooncakes.io/api/v0/manifest/haol-05/moon-octagon) 回读 `build_status=success`，包页面 <https://mooncakes.io/docs/haol-05/moon-octagon> |
-| Mooncakes 安装复测 | 全新模块执行 `moon add haol-05/moon-octagon` 下载 0.1.1，消费者程序运行输出 `sum<=100` 与规范形式 |
+| Mooncakes | `moon publish` 发布 `haol-05/moon-octagon@0.1.2`；[manifest API](https://mooncakes.io/api/v0/manifest/haol-05/moon-octagon) 回读 `build_status=success`，包页面 <https://mooncakes.io/docs/haol-05/moon-octagon> |
+| Mooncakes 安装复测 | 全新模块执行 `moon add haol-05/moon-octagon` 下载 0.1.2，消费者程序运行输出 `sum<=100` 与规范形式 |
 
 `_build/reports/independent-oracle.json` 保留可复查收据；构建缓存可重建，不作为源码提交的一部分。
 
