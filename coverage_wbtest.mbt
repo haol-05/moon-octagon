@@ -19,6 +19,8 @@ test "accessors empty-state operations and render edges" {
 
 ///|
 test "empty domain operations stay total" {
+  assert_true(bottom(1).is_bottom())
+  assert_false(bottom(1).is_top())
   assert_true(bottom(1).refine([upper(0, 0L)]).is_bottom())
   assert_true(bottom(1).canonical().is_bottom())
   assert_true(bottom(1).join(top(1)).is_top())
@@ -203,6 +205,11 @@ test "protocol operations expose transfer join meet loop and queries" {
 ///|
 test "protocol rejects malformed requests and oversized batches" {
   assert_true(process_json("[]").contains("\"ok\":false"))
+  assert_true(
+    process_json("{\"op\":\"analyze\",\"dimensions\":1,\"constraints\":[5]}").contains(
+      "\"ok\":false",
+    ),
+  )
   assert_true(process_json("{\"op\":\"analyze\"}").contains("\"ok\":false"))
   assert_true(
     process_json("{\"op\":1,\"dimensions\":1,\"constraints\":[]}").contains(

@@ -19,7 +19,7 @@
 | `moon run examples/relations`、`examples/interval-gap` | js / wasm / wasm-gc 均成功，三个目标输出一致 |
 | `node --test scripts/cli.test.mjs` | 4/4（stdin、batch、--out、退出码 2/64） |
 | `node scripts/verify.mjs` | 退出 0；1046 个系统、21216 次查询、320 次赋值、320 次 join/meet、64 组冲突 |
-| `moon coverage analyze` | 未覆盖行由 101 降至 33；核心库仅余防御性/不可达分支，示例与 CLI 进程入口不计入单元覆盖 |
+| `moon coverage analyze` | 未覆盖行由 101 降至 31；核心库余 12 行，主要是协议错误信封与防御性检查；示例、CLI 与 bridge 进程入口不计入单元覆盖 |
 | 干净副本复现 | 源码复制到仓库外目录、排除 `_build`/`.git`，重跑 verify.mjs 退出 0，三个目标仍为 37/37 |
 | GitHub Actions | run [44320812207](https://github.com/haol-05/moon-octagon/actions/runs/44320812207)：check、test(js)、test(wasm)、test(wasm-gc)、native、oracle 六个作业全部 success；后续提交运行同样通过 |
 | Mooncakes | `moon publish` 发布 `haol-05/moon-octagon@0.1.2`；[manifest API](https://mooncakes.io/api/v0/manifest/haol-05/moon-octagon) 回读 `build_status=success`，包页面 <https://mooncakes.io/docs/haol-05/moon-octagon> |
