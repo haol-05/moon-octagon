@@ -1,6 +1,6 @@
 # 本地验证记录
 
-日期：2026-11-18，Asia/Shanghai。状态：核心实现与公开仓库交付完成；Mooncakes 尚未发布，报名、初审与最终验收未提交。
+日期：2026-11-21，Asia/Shanghai。状态：核心实现与公开仓库交付完成；Mooncakes 尚未发布，报名、初审与最终验收未提交。
 
 ## 工具链
 
@@ -15,11 +15,11 @@
 | `moon fmt --check` | 退出 0 |
 | `moon check --target js/wasm/wasm-gc --deny-warn -j 1` | 各目标退出 0 |
 | `moon build --target js/wasm/wasm-gc -j 1` | 各目标退出 0 |
-| `moon test --target js/wasm/wasm-gc --deny-warn -j 1` | 每目标 **26/26** |
+| `moon test --target js/wasm/wasm-gc --deny-warn -j 1` | 每目标 **29/29** |
 | `moon run examples/relations`、`examples/interval-gap` | js / wasm / wasm-gc 均成功，三个目标输出一致 |
 | `node --test scripts/cli.test.mjs` | 4/4（stdin、batch、--out、退出码 2/64） |
 | `node scripts/verify.mjs` | 退出 0；1046 个系统、21216 次查询、320 次赋值、320 次 join/meet、64 组冲突 |
-| 干净副本复现 | 源码复制到仓库外目录、排除 `_build`/`.git`，重跑 verify.mjs 退出 0，三个目标仍为 26/26 |
+| 干净副本复现 | 源码复制到仓库外目录、排除 `_build`/`.git`，重跑 verify.mjs 退出 0，三个目标仍为 29/29 |
 | GitHub Actions | run [44320812207](https://github.com/haol-05/moon-octagon/actions/runs/44320812207)：check、test(js)、test(wasm)、test(wasm-gc)、native、oracle 六个作业全部 success |
 
 `_build/reports/independent-oracle.json` 保留可复查收据；构建缓存可重建，不作为源码提交的一部分。
@@ -35,7 +35,7 @@
 - **320 个 join/meet 案例**：合并界与具体并集的 extrema 一致；meet 对照具体交集。
 - **64 组冲突子集**：复核索引唯一、闭包验证器结果，并在原始有界空间直接检查所选约束不含解。
 
-MoonBit 测试（每目标 26 项）覆盖：负奇数 floor、实数可行/整数不可行、同变量抵消、关系投影（`forget`、`forget_many` 与穷举投影一致、顺序无关）、signed-copy 赋值、join 引入新状态、widening 关系保持、循环归纳性、预算耗尽、输入所有权、错误符号/维度、批量 `intervals`、`render` 稳定文本、`render_constraint`、冲突 JSON 原文、精度敏感 JSON、重复键、嵌套限制、批次逐项错误、公开消费者调用和 CLI 合同。
+MoonBit 测试（每目标 29 项）覆盖：120 组固定种子的随机三约束系统（成员关系、区间、check、投影均与具体枚举对照）、`check_all` 批量判定、负奇数 floor、实数可行/整数不可行、同变量抵消、关系投影（`forget`、`forget_many` 与穷举投影一致、顺序无关）、signed-copy 赋值、join 引入新状态、widening 关系保持、循环归纳性、预算耗尽、输入所有权、带下标与预算值的错误信息、错误符号/维度、批量 `intervals`、`render` 稳定文本、`render_constraint`、冲突 JSON 原文、精度敏感 JSON、重复键、嵌套限制、批次逐项错误、公开消费者调用和 CLI 合同。
 
 这些是有限行为证据，不能替代数学定理的形式化证明或其他分析器的端到端集成。
 

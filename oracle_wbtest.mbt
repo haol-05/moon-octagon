@@ -15,6 +15,22 @@ fn concrete_holds(p : Array[Int64], cs : Array[Constraint]) -> Bool {
 }
 
 ///|
+fn expr_value(p : Array[Int64], c : Constraint) -> Int64 {
+  let a = p[c.left.variable] * c.left.sign.to_int64()
+  let b = match c.right {
+    None => 0L
+    Some(t) => p[t.variable] * t.sign.to_int64()
+  }
+  a + b
+}
+
+///|
+fn next_rand(state : Array[Int64]) -> Int64 {
+  state[0] = (state[0] * 1103515245L + 12345L) % 2147483648L
+  state[0]
+}
+
+///|
 fn concrete_points(cs : Array[Constraint]) -> Array[Array[Int64]] {
   let result : Array[Array[Int64]] = []
   for x in -3..<4 {
@@ -200,4 +216,70 @@ test "JSON literal precision nesting batch limits and item isolation" {
   assert_eq(process_batch_json("[]"), "[]")
   let nested = String::make(40, '[') + "0" + String::make(40, ']')
   assert_true(process_json(nested).contains("\"code\":\"json\""))
+}
+
+///|
+test "seeded random systems agree with the concrete oracle" {
+  let state : Array[Int64] = [20261121L]
+  for _ in 0..<120 {
+    let cs = [
+      lower(0, -3L),
+      upper(0, 3L),
+      lower(1, -3L),
+      upper(1, 3L),
+      relation(positive(0), positive(1), next_rand(state) % 9L - 4L),
+      relation(positive(0), negative(1), next_rand(state) % 9L - 4L),
+      relation(negative(0), positive(1), next_rand(state) % 9L - 4L),
+    ]
+    let points = concrete_points(cs)
+    let s = from_constraints(2, cs)
+    for x in -3..<4 {
+      for y in -3..<4 {
+        let p = [x.to_int64(), y.to_int64()]
+        assert_eq(s.contains(p), concrete_holds(p, cs))
+      }
+    }
+    for i in 0..<2 {
+      let mut lo = 100L
+      let mut hi = -100L
+      for p in points {
+        if p[i] < lo {
+          lo = p[i]
+        }
+        if p[i] > hi {
+          hi = p[i]
+        }
+      }
+      if points.length() == 0 {
+        assert_eq(s.interval(i), None)
+      } else {
+        assert_eq(s.interval(i), Some({ lower: Some(lo), upper: Some(hi), }))
+      }
+    }
+    let queries = [
+      relation(positive(0), positive(1), 0L),
+      upper(0, 0L),
+      lower(1, -1L),
+      relation(negative(0), negative(1), -2L),
+    ]
+    for c in queries {
+      match s.check(c) {
+        Vacuous => assert_true(points.length() == 0)
+        Proven =>
+          for p in points {
+            assert_true(expr_value(p, c) <= c.bound)
+          }
+        Refuted(w) => {
+          assert_true(points.length() > 0)
+          assert_true(s.contains(w))
+          assert_true(!satisfies(w, c))
+        }
+      }
+    }
+    let projected = s.forget_many([0])
+    for y in -3..<4 {
+      let expected = points.any(p => p[1] == y.to_int64())
+      assert_eq(projected.contains([100L, y.to_int64()]), expected)
+    }
+  }
 }
