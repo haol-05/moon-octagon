@@ -146,6 +146,35 @@ fn optional_integer(
 }
 
 ///|
+fn read_blocks(value : Json) -> Array[Block] raise OctagonError {
+  let items = arr(value)
+  if items.length() > 64 {
+    raise Limit("cfg: at most 64 blocks")
+  }
+  items.map(item => {
+    let m = match item {
+      Object(m) => m
+      _ => raise Invalid("cfg: expected a block object")
+    }
+    ignore(obj(item, ["conditions", "body", "successors"]))
+    let conditions = read_constraints(get(m, "conditions"))
+    let body = read_transfers(get(m, "body"))
+    let raw = arr(get(m, "successors"))
+    if raw.length() > 8 {
+      raise Limit("cfg: at most 8 successors per block")
+    }
+    let successors : Array[Int32] = raw.map(x => {
+      let v = integer(x).to_int()
+      if v < 0 {
+        raise Invalid("cfg: successor indices are non-negative")
+      }
+      v
+    })
+    { conditions, body, successors, }
+  })
+}
+
+///|
 /// Stable JSON output with explicit empty/unbounded states and decimal Int64 strings.
 pub fn Octagon::report(self : Octagon) -> Json raise OctagonError {
   if self.empty {
@@ -178,10 +207,22 @@ fn dispatch(value : Json) -> Json raise OctagonError {
   let op = str(get(m, "op"))
   let allowed = [
     "op", "dimensions", "constraints", "queries", "transfers", "other", "guard",
-    "body", "max_iterations", "widen_after", "narrowing_steps", "max_checks",
+    "body", "max_iterations", "widen_after", "narrowing_steps", "max_checks", "text",
+    "blocks", "max_steps",
   ]
   ignore(obj(value, allowed))
   // Operation-specific fields are checked below to prevent silently ignored options.
+  if op == "text" {
+    ignore(obj(value, ["op", "dimensions", "text"]))
+    let n = integer(get(m, "dimensions")).to_int()
+    let cs = parse_constraints(n, str(get(m, "text")))
+    let s = from_constraints(n, cs)
+    return {
+      "domain": s.report(),
+      "render": @json.to_json(s.render()),
+      "constraints": @json.to_json(cs.length()),
+    }
+  }
   let n = integer(get(m, "dimensions")).to_int()
   let cs = read_constraints(get(m, "constraints"))
   let s = from_constraints(n, cs)
@@ -277,6 +318,36 @@ fn dispatch(value : Json) -> Json raise OctagonError {
             Inductive => verify_invariant(s, r.head, guards, body)
             BudgetExhausted => false
           },
+        ),
+      }
+    }
+    "box" => {
+      ignore(obj(value, ["op", "dimensions", "constraints"]))
+      { "box": @json.to_json(s.to_box().render()), "domain": s.report() }
+    }
+    "cfg" => {
+      ignore(
+        obj(value, [
+          "op", "dimensions", "constraints", "blocks", "max_steps", "widen_after",
+        ]),
+      )
+      let blocks = read_blocks(get(m, "blocks"))
+      let r = analyze_blocks(
+        s,
+        blocks,
+        max_steps=optional_integer(m, "max_steps", 512),
+        widen_after=optional_integer(m, "widen_after", 2),
+      )
+      {
+        "status": @json.to_json(
+          match r.status {
+            CfgStable => "stable"
+            CfgBudgetExhausted => "budget_exhausted"
+          },
+        ),
+        "steps": @json.to_json(r.steps),
+        "states": @json.to_json(
+          Array::makei(r.states.length(), i => r.states[i].report()),
         ),
       }
     }
