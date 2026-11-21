@@ -39,7 +39,7 @@ node scripts/cli.mjs examples/parity-conflict.json
 
 ## 调用库
 
-当前项目仅本地开发，**尚未发布 Mooncakes**；不要把模块名当成可安装性证明。先在本目录运行示例和公开消费者测试。将来公开后再按实际发布版本添加依赖。在 `moon.pkg` 中导入 `"haol-05/moon-octagon" @oct`：
+Mooncakes 包：**`haol-05/moon-octagon` 0.1.0**。用 `moon add haol-05/moon-octagon` 安装，或在 `moon.pkg` 中导入 `"haol-05/moon-octagon" @oct`：
 
 ```moonbit
 let s = @oct.from_constraints(2, [
