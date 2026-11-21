@@ -23,10 +23,11 @@
 | 来源与许可证 | MIT、公开数学参考、无第三方复制代码；官方 core 为编译依赖 |
 | README、示例、CI | 本地配齐；GitHub Actions run 44320812207 的 check/test/native/oracle 六个作业全部通过 |
 | GitHub | 公开仓库 https://github.com/haol-05/moon-octagon，main 分支保留连续、可追溯的开发提交 |
-| Mooncakes、报名 | 均未执行；发布与问卷提交仍需参赛者明确授权并完成 |
+| Mooncakes | 已发布 `haol-05/moon-octagon@0.1.0`（2026-11-21），manifest API `build_status=success` |
+| 报名 | 未提交问卷或申报书，未取得初审结论 |
 | Native | 本机 Windows runtime 要求 MSVC，GCC 构建失败，不报告本机通过；CI 的 Linux native 作业成功 |
 
-这些证据支持“本地实现、三个可用目标和线上 CI 验证完成”，不能支持“官方通过”“全球唯一”“已满足全部交付要求”。GitHub 仓库与提交历史已建立；Mooncakes 发布、报名问卷和官方审核仍未执行。
+这些证据支持“本地实现、三个可用目标和线上 CI 验证完成”，不能支持“官方通过”“全球唯一”“已满足全部交付要求”。GitHub 仓库、提交历史与 Mooncakes 0.1.0 已建立；报名问卷和官方审核仍未执行。
 
 ## 申报准备
 

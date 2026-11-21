@@ -39,7 +39,7 @@ node scripts/cli.mjs examples/parity-conflict.json
 
 ## 调用库
 
-Mooncakes 包：**`haol-05/moon-octagon` 0.1.0**。用 `moon add haol-05/moon-octagon` 安装，或在 `moon.pkg` 中导入 `"haol-05/moon-octagon" @oct`：
+Mooncakes 包：[haol-05/moon-octagon 0.1.0](https://mooncakes.io/docs/haol-05/moon-octagon)（服务端 `build_status=success`）。用 `moon add haol-05/moon-octagon` 安装，或在 `moon.pkg` 中导入 `"haol-05/moon-octagon" @oct`：
 
 ```moonbit
 let s = @oct.from_constraints(2, [
@@ -87,7 +87,7 @@ node --test scripts/cli.test.mjs
 node scripts/verify.mjs
 ```
 
-本地已验证 JS / Wasm / WasmGC 每目标 26 项测试，额外独立枚举 **1,046 个系统、21,216 次查询、320 次赋值、320 次 join/meet、64 组冲突证据**；其中穷举了 28 条二元有符号规则的所有 406 种无序二规则组合。测试目标是有限模型中的语义，不把有限测试当成形式化证明。详见 [docs/VALIDATION.md](docs/VALIDATION.md)，可复跑收据写在 `_build/reports/independent-oracle.json`。
+本地已验证 JS / Wasm / WasmGC 每目标 29 项测试（含 120 组固定种子随机系统），额外独立枚举 **1,046 个系统、21,216 次查询、320 次赋值、320 次 join/meet、64 组冲突证据**；其中穷举了 28 条二元有符号规则的所有 406 种无序二规则组合。测试目标是有限模型中的语义，不把有限测试当成形式化证明。详见 [docs/VALIDATION.md](docs/VALIDATION.md)，可复跑收据写在 `_build/reports/independent-oracle.json`。
 
 GitHub Actions（[ci.yml](.github/workflows/ci.yml)）在 Linux 上分四个作业运行格式检查、三个目标的 check/build/test、Native 构建测试、示例和独立 oracle；作业结果以 Actions 页面为准。
 
@@ -95,4 +95,4 @@ GitHub Actions（[ci.yml](.github/workflows/ci.yml)）在 Linux 上分四个作�
 
 本项目与已有区间分析、SMT/符号执行、Cassowary、STN 存在数学和用途相邻关系。**GitHub 仓库/README/代码与 Mooncakes 都已检索，有限范围未发现相同整数八边形域核心；不能保证全网零重叠或官方过审。** 具体查询与源码证据见 [SOURCES.md](SOURCES.md)。
 
-MIT 许可证。算法来自公开文献的独立实现，不是新数学算法，也不是 APRON 完整移植。源码仓库已公开在 <https://github.com/haol-05/moon-octagon>；**尚未发布 Mooncakes**，也没有提交报名或进入官方初审。
+MIT 许可证。算法来自公开文献的独立实现，不是新数学算法，也不是 APRON 完整移植。源码仓库已公开在 <https://github.com/haol-05/moon-octagon>，Mooncakes 0.1.0 已发布并通过服务端构建；没有提交报名或进入官方初审。

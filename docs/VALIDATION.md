@@ -1,6 +1,6 @@
 # 本地验证记录
 
-日期：2026-11-21，Asia/Shanghai。状态：核心实现与公开仓库交付完成；Mooncakes 尚未发布，报名、初审与最终验收未提交。
+日期：2026-11-21，Asia/Shanghai。状态：核心实现、公开仓库与 Mooncakes 0.1.0 交付完成；报名、初审与最终验收未提交。
 
 ## 工具链
 
@@ -20,7 +20,9 @@
 | `node --test scripts/cli.test.mjs` | 4/4（stdin、batch、--out、退出码 2/64） |
 | `node scripts/verify.mjs` | 退出 0；1046 个系统、21216 次查询、320 次赋值、320 次 join/meet、64 组冲突 |
 | 干净副本复现 | 源码复制到仓库外目录、排除 `_build`/`.git`，重跑 verify.mjs 退出 0，三个目标仍为 29/29 |
-| GitHub Actions | run [44320812207](https://github.com/haol-05/moon-octagon/actions/runs/44320812207)：check、test(js)、test(wasm)、test(wasm-gc)、native、oracle 六个作业全部 success |
+| GitHub Actions | run [44320812207](https://github.com/haol-05/moon-octagon/actions/runs/44320812207)：check、test(js)、test(wasm)、test(wasm-gc)、native、oracle 六个作业全部 success；后续提交运行同样通过 |
+| Mooncakes | `moon publish` 发布 `haol-05/moon-octagon@0.1.0`；[manifest API](https://mooncakes.io/api/v0/manifest/haol-05/moon-octagon) 回读 `build_status=success`，包页面 <https://mooncakes.io/docs/haol-05/moon-octagon> |
+| Mooncakes 安装复测 | 全新模块执行 `moon add haol-05/moon-octagon` 下载 0.1.0，消费者程序运行输出 `sum<=100` 与规范形式 |
 
 `_build/reports/independent-oracle.json` 保留可复查收据；构建缓存可重建，不作为源码提交的一部分。
 
@@ -41,7 +43,6 @@ MoonBit 测试（每目标 29 项）覆盖：120 组固定种子的随机三约�
 
 ## 尚未通过或未执行
 
-- **Mooncakes**：未执行 `moon publish`；仓库中的模块名与账号命名空间一致，但包页面与安装状态尚不存在。
 - **报名、初审、最终验收**：未提交问卷或申报书，未取得官方结论。
 - **本机 Windows Native**：官方 runtime 当前只支持 MSVC，使用已有 GCC 编译失败，故不报告本机 Native 通过；CI 的 Linux native 作业已实际成功，不能混写为本机结果。
 - **生态唯一性**：只做了 SOURCES.md 中明确范围的实时检索；私有/未索引/未来项目及官方立项意见未知。
