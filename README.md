@@ -87,7 +87,7 @@ node --test scripts/cli.test.mjs
 node scripts/verify.mjs
 ```
 
-本地已验证 JS / Wasm / WasmGC 每目标 29 项测试（含 120 组固定种子随机系统），额外独立枚举 **1,046 个系统、21,216 次查询、320 次赋值、320 次 join/meet、64 组冲突证据**；其中穷举了 28 条二元有符号规则的所有 406 种无序二规则组合。测试目标是有限模型中的语义，不把有限测试当成形式化证明。详见 [docs/VALIDATION.md](docs/VALIDATION.md)，可复跑收据写在 `_build/reports/independent-oracle.json`。
+本地已验证 JS / Wasm / WasmGC 每目标 37 项测试（含 120 组固定种子随机系统与空域/预算/协议错误路径），额外独立枚举 **1,046 个系统、21,216 次查询、320 次赋值、320 次 join/meet、64 组冲突证据**；其中穷举了 28 条二元有符号规则的所有 406 种无序二规则组合。测试目标是有限模型中的语义，不把有限测试当成形式化证明。详见 [docs/VALIDATION.md](docs/VALIDATION.md)，可复跑收据写在 `_build/reports/independent-oracle.json`。
 
 GitHub Actions（[ci.yml](.github/workflows/ci.yml)）在 Linux 上分四个作业运行格式检查、三个目标的 check/build/test、Native 构建测试、示例和独立 oracle；作业结果以 Actions 页面为准。
 
