@@ -7,17 +7,33 @@ import {
 }
 
 // Values
+pub fn analyze_blocks(Octagon, Array[Block], max_steps? : Int32, widen_after? : Int32) -> CfgResult raise OctagonError
+
 pub fn analyze_loop(Octagon, Array[Constraint], Array[Transfer], max_iterations? : Int32, widen_after? : Int32, narrowing_steps? : Int32) -> LoopResult raise OctagonError
 
 pub fn bottom(Int32) -> Octagon raise OctagonError
+
+pub fn box_bottom(Int32) -> Box raise OctagonError
+
+pub fn box_join_all(Array[Box]) -> Box raise OctagonError
+
+pub fn box_meet_all(Array[Box]) -> Box raise OctagonError
+
+pub fn box_top(Int32) -> Box raise OctagonError
 
 pub fn explain_conflict(Int32, Array[Constraint], max_checks? : Int32) -> Conflict? raise OctagonError
 
 pub fn from_constraints(Int32, Array[Constraint]) -> Octagon raise OctagonError
 
+pub fn join_all(Array[Octagon]) -> Octagon raise OctagonError
+
 pub fn lower(Int32, Int64) -> Constraint
 
+pub fn meet_all(Array[Octagon]) -> Octagon raise OctagonError
+
 pub fn negative(Int32) -> Term
+
+pub fn parse_constraints(Int32, String) -> Array[Constraint] raise OctagonError
 
 pub fn positive(Int32) -> Term
 
@@ -48,6 +64,54 @@ pub suberror OctagonError {
 }
 
 // Types and methods
+pub(all) struct Assignment {
+  target : Int32
+  source : Term
+  offset : Int64
+}
+
+pub(all) struct Block {
+  conditions : Array[Constraint]
+  body : Array[Transfer]
+  successors : Array[Int32]
+}
+
+pub struct Box {
+  dimensions : Int32
+  lower : Array[Int64?]
+  upper : Array[Int64?]
+  empty : Bool
+}
+pub fn Box::assign(Self, Int32, Term, Int64) -> Self raise OctagonError
+pub fn Box::contains(Self, Array[Int64]) -> Bool raise OctagonError
+pub fn Box::entails(Self, Constraint) -> Bool raise OctagonError
+pub fn Box::equivalent(Self, Self) -> Bool raise OctagonError
+pub fn Box::forget(Self, Int32) -> Self raise OctagonError
+pub fn Box::interval(Self, Int32) -> Interval? raise OctagonError
+pub fn Box::is_bottom(Self) -> Bool
+pub fn Box::is_top(Self) -> Bool
+pub fn Box::join(Self, Self) -> Self raise OctagonError
+pub fn Box::meet(Self, Self) -> Self raise OctagonError
+pub fn Box::render(Self) -> String
+pub fn Box::set_constant(Self, Int32, Int64) -> Self raise OctagonError
+pub fn Box::size(Self) -> Int32
+pub fn Box::subset_of(Self, Self) -> Bool raise OctagonError
+pub fn Box::to_octagon(Self) -> Octagon raise OctagonError
+pub fn Box::to_text(Self) -> String raise OctagonError
+pub fn Box::widen(Self, Self) -> Self raise OctagonError
+pub fn Box::witness(Self) -> Array[Int64]? raise OctagonError
+
+pub(all) struct CfgResult {
+  states : Array[Octagon]
+  status : CfgStatus
+  steps : Int32
+}
+
+pub(all) enum CfgStatus {
+  CfgStable
+  CfgBudgetExhausted
+}
+
 #derive(Eq, @debug.Debug, @json.ToJson)
 pub(all) struct Conflict {
   indices : Array[Int32]
@@ -88,6 +152,7 @@ pub struct Octagon {
   empty : Bool
 }
 pub fn Octagon::assign(Self, Int32, Term, Int64) -> Self raise OctagonError
+pub fn Octagon::assign_parallel(Self, Array[Assignment]) -> Self raise OctagonError
 pub fn Octagon::bound(Self, Term, Term?) -> Int64? raise OctagonError
 pub fn Octagon::canonical(Self) -> Self raise OctagonError
 pub fn Octagon::check(Self, Constraint) -> Verdict raise OctagonError
@@ -106,11 +171,14 @@ pub fn Octagon::is_top(Self) -> Bool
 pub fn Octagon::join(Self, Self) -> Self raise OctagonError
 pub fn Octagon::meet(Self, Self) -> Self raise OctagonError
 pub fn Octagon::refine(Self, Array[Constraint]) -> Self raise OctagonError
+pub fn Octagon::rename(Self, Array[Int32]) -> Self raise OctagonError
 pub fn Octagon::render(Self) -> String raise OctagonError
 pub fn Octagon::report(Self) -> @json.Json raise OctagonError
 pub fn Octagon::set_constant(Self, Int32, Int64) -> Self raise OctagonError
 pub fn Octagon::size(Self) -> Int32
 pub fn Octagon::subset_of(Self, Self) -> Bool raise OctagonError
+pub fn Octagon::to_box(Self) -> Box raise OctagonError
+pub fn Octagon::to_text(Self) -> String raise OctagonError
 pub fn Octagon::widen(Self, Self) -> Self raise OctagonError
 pub fn Octagon::witness(Self) -> Array[Int64]? raise OctagonError
 

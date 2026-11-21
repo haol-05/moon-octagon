@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.0 — 2026-11-21
+
+功能版本：文本前端、独立区间层、并行赋值与 CFG 工作流分析。
+
+- 文本前端：`parse_constraints` / `Octagon::to_text`，支持区间、`<=` / `>=` / `=`、负字面量与注释。
+- 独立区间层 `Box`：格运算、赋值、投影、witness、文本与八边形互转，以及 `box_join_all` / `box_meet_all`。
+- 并行赋值 `assign_parallel`（临时维度 + 投影）与 `rename`（矩阵置换），多状态 `join_all` / `meet_all`。
+- CFG：`Block` 与 `analyze_blocks` 有界 worklist，回边 widening，`CfgStable` / `CfgBudgetExhausted`。
+- JSON：新增 `text` / `box` / `cfg` 操作。
+- 测试：每目标 68 项；MoonBit 源码约 4.7k 行。
+
 ## 0.1.2 — 2026-11-21
 
 边界与错误路径测试补丁，无 API 或语义变化。

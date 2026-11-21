@@ -8,7 +8,7 @@
 
 空域作为单独状态表示，不能导出为可满足 conjunction。`constraints` 返回完整规范关系集，输入输出数组不与内部矩阵共享；所有公开运算返回新状态。查询闭包副本，不会修改 widening 中间表示。
 
-`assign(target, source, offset)` 精确计算 `x_target:=sign*x_source+offset` 的八边形像，RHS 从同一旧状态读取，支持自赋值和负号。多条 Transfer **顺序执行**；若要同时交换两个变量，调用者应使用临时维度，不要把顺序赋值当成并行赋值。`forget` 是存在量化投影，保留其他变量之间已推出的关系。
+`assign(target, source, offset)` 精确计算 `x_target:=sign*x_source+offset` 的八边形像，RHS 从同一旧状态读取，支持自赋值和负号。多条 Transfer **顺序执行**；需要真正同时交换多个变量时使用 `assign_parallel`（内部临时维度后投影），不要把顺序赋值当成并行赋值。`rename` 用矩阵置换实现同一维度的变量重命名。`forget` 是存在量化投影，保留其他变量之间已推出的关系。
 
 ## 库限制
 
@@ -23,12 +23,15 @@
 | Transfer | 每次 ≤128 条 |
 | 冲突提取/验证 | 原始约束 ≤512；提取检查预算 1..1024，预算不足直接抛 Limit |
 | 循环 | 迭代 1..256、widen 延迟 0..32、narrowing 0..8 |
+| 文本输入 | ≤200000 UTF-16 单元、≤4096 条约束 |
+| 并行赋值 | 每次 ≤8 条，且 dimensions + 条数 ≤24 |
+| CFG | 块 1..64、每块后继 ≤8、步数 1..4096、widen 延迟 0..16 |
 
 `INF=4×10^15` 只作无穷哨兵；矩阵有限项与它分离。合法输入不保证所有后续运算均在预算内；调用者必须处理 `Arithmetic`。维度/预算不是性能承诺，特别是最大规模的冲突最小化与多轮循环有更高成本。
 
 ## JSON
 
-请求都是一个 object，必须有 `op`、`dimensions`、`constraints`。维度为 JSON 整数字面量；所有输入数值在 ±10^9 内。拒绝小数、指数形式、重复键、未知字段、缺少字段、越界变量和非 ±1 符号。保留数字原始文本，避免浮点解析把 `1.00000000000000000000001` 错当成整数 1。
+请求都是一个 object，必须有 `op`、`dimensions`；除 `text` 外都需要 `constraints`。维度为 JSON 整数字面量；所有输入数值在 ±10^9 内。拒绝小数、指数形式、重复键、未知字段、缺少字段、越界变量和非 ±1 符号。保留数字原始文本，避免浮点解析把 `1.00000000000000000000001` 错当成整数 1。
 
 Term 为 `{"variable":0,"sign":1}`。Constraint 为 `{"left":Term,"right":Term或null,"bound":整数}`；省略 right 表示一元。`bound` 也可为负数。
 
@@ -39,8 +42,13 @@ Term 为 `{"variable":0,"sign":1}`。Constraint 为 `{"left":Term,"right":Term�
 | join / meet | other，另一组同维约束 | 合并/交集 domain |
 | conflict | 可选 max_checks | 极小冲突索引、所选约束的文本、verified；可满足时 conflict=null 且 constraints 为空数组 |
 | loop | guard、body；可选 max_iterations / widen_after / narrowing_steps | inductive / budget_exhausted、head、iterations、verified |
+| text | text 字段（必填），不含 constraints | 解析后的 domain、render 文本、约束条数 |
+| box | constraints | 独立区间盒 box 文本与 domain |
+| cfg | blocks（conditions/body/successors）；可选 max_steps / widen_after | stable / budget_exhausted、steps、各块 domain |
 
 Transfer 使用 `op=guard` + constraints，`op=assign` + target/source/offset，`op=set` + target/value，`op=forget` + target。
+
+`text` 接受按行或分号分隔的 `x0 in [lo, hi]`、`x0 <= c`、`x0 >= c`、`x0 + x1 <= c`、`x0 - x1 <= c`、`x0 + x1 = c`（等号展开为两条不等式），`#` 起注释；`Octagon::to_text` 与 `Box::to_text` 的输出可被同一个解析器回读。`box` 的 `Box` 是独立区间抽象，不含变量间关系。`cfg` 的 `blocks` 按数组顺序编号，回边（后继编号不大于当前块）才触发 widening；步数耗尽时返回部分状态，调用者必须检查 `status`。
 
 所有外层结果明确包含 `ok`。数值结果中的 Int64 **输出十进制字符串**，如 `"100"`；无界为 `null`，不是 0。非空 domain 输出 intervals 和 witness；空域只有 `state=empty`。单请求文本 ≤200000 UTF-16 单位，批请求 ≤1000000，深度 ≤32，批次 ≤64 项；单请求 constraints/queries ≤512。
 

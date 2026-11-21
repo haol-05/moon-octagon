@@ -39,7 +39,7 @@ node scripts/cli.mjs examples/parity-conflict.json
 
 ## 调用库
 
-Mooncakes 包：[haol-05/moon-octagon 0.1.2](https://mooncakes.io/docs/haol-05/moon-octagon)（服务端 `build_status=success`）。用 `moon add haol-05/moon-octagon` 安装，或在 `moon.pkg` 中导入 `"haol-05/moon-octagon" @oct`：
+Mooncakes 包：[haol-05/moon-octagon 0.2.0](https://mooncakes.io/docs/haol-05/moon-octagon)（服务端 `build_status=success`）。用 `moon add haol-05/moon-octagon` 安装，或在 `moon.pkg` 中导入 `"haol-05/moon-octagon" @oct`：
 
 ```moonbit
 let s = @oct.from_constraints(2, [
@@ -62,6 +62,10 @@ let after_copy = s.assign(1, @oct.negative(0), 100L)
 | 集合与状态变换 | `meet`、`join`、`subset_of`、`equivalent`、`forget`、`forget_many`、`assign`、`set_constant`、`widen`、`execute` |
 | 证据 | `witness`、`check`、`check_all`、`satisfies`、`explain_conflict`、`verify_conflict`、`render_constraint` |
 | 循环与集成 | `analyze_loop`、`verify_invariant`、`process_json`、`process_batch_json`、`report` |
+| 文本与区间层 | `parse_constraints`、`to_text`、`box_top`、`box_bottom`、`Octagon::to_box`、`Box::to_octagon`、`Box::meet/join/widen/subset_of/entails/assign/forget/set_constant/witness/render/to_text`、`box_join_all`、`box_meet_all` |
+| 多状态与 CFG | `assign_parallel`、`rename`、`join_all`、`meet_all`、`analyze_blocks`（`Block`、`CfgResult`）与 JSON `text`/`box`/`cfg` |
+
+文本前端接受 `x0 in [0,100]`、`x0 <= c`、`x0 >= c`、`x0 + x1 <= c`、`x0 - x1 <= c` 与 `x0 + x1 = c`，按行或分号分隔，`#` 起注释；`to_text` 输出可回读的约束文本。`Box` 是同一输入上的独立区间层，用于廉价预分析或与八边形域对照；`analyze_blocks` 在最多 64 个基本块上做有界 worklist 分析，回边处才 widening。
 
 ## 数学语义与边界
 
@@ -87,7 +91,7 @@ node --test scripts/cli.test.mjs
 node scripts/verify.mjs
 ```
 
-本地已验证 JS / Wasm / WasmGC 每目标 37 项测试（含 120 组固定种子随机系统与空域/预算/协议错误路径），额外独立枚举 **1,046 个系统、21,216 次查询、320 次赋值、320 次 join/meet、64 组冲突证据**；其中穷举了 28 条二元有符号规则的所有 406 种无序二规则组合。测试目标是有限模型中的语义，不把有限测试当成形式化证明。详见 [docs/VALIDATION.md](docs/VALIDATION.md)，可复跑收据写在 `_build/reports/independent-oracle.json`。
+本地已验证 JS / Wasm / WasmGC 每目标 68 项测试（含固定种子随机系统、文本/区间层回读、并行赋值、CFG 与空域/预算/协议错误路径），额外独立枚举 **1,046 个系统、21,216 次查询、320 次赋值、320 次 join/meet、64 组冲突证据**；其中穷举了 28 条二元有符号规则的所有 406 种无序二规则组合。测试目标是有限模型中的语义，不把有限测试当成形式化证明。详见 [docs/VALIDATION.md](docs/VALIDATION.md)，可复跑收据写在 `_build/reports/independent-oracle.json`。
 
 GitHub Actions（[ci.yml](.github/workflows/ci.yml)）在 Linux 上分四个作业运行格式检查、三个目标的 check/build/test、Native 构建测试、示例和独立 oracle；作业结果以 Actions 页面为准。
 
@@ -95,4 +99,4 @@ GitHub Actions（[ci.yml](.github/workflows/ci.yml)）在 Linux 上分四个作�
 
 本项目与已有区间分析、SMT/符号执行、Cassowary、STN 存在数学和用途相邻关系。**GitHub 仓库/README/代码与 Mooncakes 都已检索，有限范围未发现相同整数八边形域核心；不能保证全网零重叠或官方过审。** 具体查询与源码证据见 [SOURCES.md](SOURCES.md)。
 
-MIT 许可证。算法来自公开文献的独立实现，不是新数学算法，也不是 APRON 完整移植。源码仓库已公开在 <https://github.com/haol-05/moon-octagon>，Mooncakes 0.1.2 已发布并通过服务端构建；没有提交报名或进入官方初审。
+MIT 许可证。算法来自公开文献的独立实现，不是新数学算法，也不是 APRON 完整移植。源码仓库已公开在 <https://github.com/haol-05/moon-octagon>，Mooncakes 0.2.0 已发布并通过服务端构建；没有提交报名或进入官方初审。
