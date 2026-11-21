@@ -91,7 +91,7 @@ fn read_constraint(value : Json) -> Constraint raise OctagonError {
 fn read_constraints(value : Json) -> Array[Constraint] raise OctagonError {
   let a = arr(value)
   if a.length() > 512 {
-    raise Limit("at most 512 constraints")
+    raise Limit("at most 512 constraints, got \{a.length()}")
   }
   a.map(read_constraint)
 }
@@ -100,7 +100,7 @@ fn read_constraints(value : Json) -> Array[Constraint] raise OctagonError {
 fn read_transfers(value : Json) -> Array[Transfer] raise OctagonError {
   let a = arr(value)
   if a.length() > 128 {
-    raise Limit("at most 128 transfers")
+    raise Limit("at most 128 transfers, got \{a.length()}")
   }
   a.map(v => {
     let m = match v {
@@ -192,9 +192,10 @@ fn dispatch(value : Json) -> Json raise OctagonError {
         None => []
         Some(v) => read_constraints(v)
       }
-      let results : Array[Json] = queries.map(c => {
-        let verdict = s.check(c)
-        match verdict {
+      let verdicts = s.check_all(queries)
+      let results : Array[Json] = Array::makei(queries.length(), i => {
+        let c = queries[i]
+        match verdicts[i] {
           Vacuous => { "verdict": "vacuous", "bound": @json.null }
           Proven =>
             {

@@ -96,14 +96,14 @@ fn clone_matrix(m : Array[Array[Int64]]) -> Array[Array[Int64]] {
 ///|
 fn validate_dimensions(n : Int32) -> Unit raise OctagonError {
   if n < 1 || n > 24 {
-    raise Limit("dimensions must be between 1 and 24")
+    raise Limit("dimensions \{n} outside 1..24")
   }
 }
 
 ///|
 fn variable(n : Int32, i : Int32) -> Unit raise OctagonError {
   if i < 0 || i >= n {
-    raise Invalid("variable index out of range")
+    raise Invalid("variable index \{i} outside 0..\{n - 1}")
   }
 }
 
@@ -111,7 +111,7 @@ fn variable(n : Int32, i : Int32) -> Unit raise OctagonError {
 fn term_index(n : Int32, t : Term) -> Int32 raise OctagonError {
   variable(n, t.variable)
   if t.sign != 1 && t.sign != -1 {
-    raise Invalid("term sign must be 1 or -1")
+    raise Invalid("term sign must be 1 or -1, got \{t.sign}")
   }
   2 * t.variable + (if t.sign == 1 { 0 } else { 1 })
 }
@@ -119,7 +119,7 @@ fn term_index(n : Int32, t : Term) -> Int32 raise OctagonError {
 ///|
 fn validate_bound(v : Int64) -> Unit raise OctagonError {
   if v < -1000000000L || v > 1000000000L {
-    raise Limit("input bound or offset exceeds +/- 1000000000")
+    raise Limit("input bound or offset \{v} exceeds +/- 1000000000")
   }
 }
 
@@ -131,7 +131,7 @@ fn validate_constraint(n : Int32, c : Constraint) -> Unit raise OctagonError {
   }
   let bound_limit = if c.right is None { MAX_FINITE / 2L } else { MAX_FINITE }
   if c.bound < -bound_limit || c.bound > bound_limit {
-    raise Limit("constraint exceeds exact arithmetic budget")
+    raise Limit("constraint bound \{c.bound} exceeds exact arithmetic budget")
   }
 }
 
@@ -213,6 +213,8 @@ pub fn Octagon::is_top(self : Octagon) -> Bool {
 ///|
 fn compatible(a : Octagon, b : Octagon) -> Unit raise OctagonError {
   if a.dimensions != b.dimensions {
-    raise Invalid("domain dimensions differ")
+    raise Invalid(
+      "domain dimensions differ: \{a.dimensions} vs \{b.dimensions}",
+    )
   }
 }

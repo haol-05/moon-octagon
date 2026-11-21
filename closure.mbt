@@ -81,7 +81,9 @@ pub fn Octagon::refine(
   constraints : Array[Constraint],
 ) -> Octagon raise OctagonError {
   if constraints.length() > 4096 {
-    raise Limit("at most 4096 constraints per library operation")
+    raise Limit(
+      "at most 4096 constraints per operation, got \{constraints.length()}",
+    )
   }
   let m = clone_matrix(self.matrix)
   for c in constraints {

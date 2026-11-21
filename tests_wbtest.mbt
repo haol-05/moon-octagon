@@ -323,3 +323,66 @@ test "multi-variable projection matches repeated forget and is order independent
   }
   assert_true(invalid)
 }
+
+///|
+test "batch verdicts match individual checks" {
+  let s = from_constraints(2, [upper(0, 5L), lower(1, 0L)])
+  let cs = [upper(0, 5L), upper(0, 4L), lower(1, 1L), lower(1, 0L)]
+  let all = s.check_all(cs)
+  assert_eq(all.length(), 4)
+  for i in 0..<cs.length() {
+    match (all[i], s.check(cs[i])) {
+      (Proven, Proven) => ()
+      (Vacuous, Vacuous) => ()
+      (Refuted(a), Refuted(b)) => assert_eq(a, b)
+      _ => fail("batch and single verdicts disagree")
+    }
+  }
+  assert_eq(bottom(2).check_all([]).length(), 0)
+  match bottom(2).check_all([upper(0, 0L)])[0] {
+    Vacuous => ()
+    _ => fail("empty domain must be vacuous")
+  }
+  let too_many : Array[Constraint] = Array::makei(513, _ => upper(0, 0L))
+  let limited = try {
+    ignore(s.check_all(too_many))
+    false
+  } catch {
+    Limit(m) => m.contains("513")
+    _ => false
+  }
+  assert_true(limited)
+}
+
+///|
+test "validation errors name the offending value" {
+  let out_of_range = try {
+    ignore(top(2).interval(3))
+    ""
+  } catch {
+    Invalid(m) => m
+    _ => ""
+  }
+  assert_true(out_of_range.contains("3"))
+  assert_true(out_of_range.contains("0..1"))
+  let bad_sign = try {
+    ignore(
+      top(1).refine([
+        { left: { variable: 0, sign: 0, }, right: None, bound: 0L, },
+      ]),
+    )
+    ""
+  } catch {
+    Invalid(m) => m
+    _ => ""
+  }
+  assert_true(bad_sign.contains("got 0"))
+  let mismatch = try {
+    ignore(top(1).join(top(2)))
+    ""
+  } catch {
+    Invalid(m) => m
+    _ => ""
+  }
+  assert_true(mismatch.contains("1 vs 2"))
+}

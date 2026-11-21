@@ -43,7 +43,7 @@ pub fn Octagon::execute(
   operations : Array[Transfer],
 ) -> Octagon raise OctagonError {
   if operations.length() > 128 {
-    raise Limit("at most 128 transfer operations")
+    raise Limit("at most 128 transfer operations, got \{operations.length()}")
   }
   let mut s = self
   for op in operations {

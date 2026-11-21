@@ -73,6 +73,25 @@ pub fn Octagon::check(
 }
 
 ///|
+/// Batch version of `check`. Every input is validated even for an empty domain,
+/// and at most 512 candidates are accepted per call.
+pub fn Octagon::check_all(
+  self : Octagon,
+  constraints : Array[Constraint],
+) -> Array[Verdict] raise OctagonError {
+  if constraints.length() > 512 {
+    raise Limit(
+      "at most 512 constraints per check_all, got \{constraints.length()}",
+    )
+  }
+  let result : Array[Verdict] = []
+  for c in constraints {
+    result.push(self.check(c))
+  }
+  result
+}
+
+///|
 /// Returns an inclusion-minimal inconsistent subset of original constraint indices.
 /// This is not a minimum-cardinality subset; work is explicitly budgeted.
 pub fn explain_conflict(
@@ -81,10 +100,12 @@ pub fn explain_conflict(
   max_checks~ : Int32 = 1024,
 ) -> Conflict? raise OctagonError {
   if constraints.length() > 512 {
-    raise Limit("at most 512 constraints for conflict minimization")
+    raise Limit(
+      "at most 512 constraints for conflict minimization, got \{constraints.length()}",
+    )
   }
   if max_checks < 1 || max_checks > 1024 {
-    raise Limit("conflict budget must be 1..1024")
+    raise Limit("conflict budget must be 1..1024, got \{max_checks}")
   }
   if !from_constraints(n, constraints).empty {
     return None
@@ -121,7 +142,9 @@ pub fn verify_conflict(
   evidence : Conflict,
 ) -> Bool raise OctagonError {
   if constraints.length() > 512 {
-    raise Limit("at most 512 constraints for conflict verification")
+    raise Limit(
+      "at most 512 constraints for conflict verification, got \{constraints.length()}",
+    )
   }
   ignore(from_constraints(n, constraints))
   if evidence.indices.length() == 0 {

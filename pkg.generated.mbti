@@ -91,6 +91,7 @@ pub fn Octagon::assign(Self, Int32, Term, Int64) -> Self raise OctagonError
 pub fn Octagon::bound(Self, Term, Term?) -> Int64? raise OctagonError
 pub fn Octagon::canonical(Self) -> Self raise OctagonError
 pub fn Octagon::check(Self, Constraint) -> Verdict raise OctagonError
+pub fn Octagon::check_all(Self, Array[Constraint]) -> Array[Verdict] raise OctagonError
 pub fn Octagon::constraints(Self) -> Array[Constraint] raise OctagonError
 pub fn Octagon::contains(Self, Array[Int64]) -> Bool raise OctagonError
 pub fn Octagon::entails(Self, Constraint) -> Bool raise OctagonError
